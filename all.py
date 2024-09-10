@@ -1,0 +1,30 @@
+# Recursive somme fonction
+def somme_rec(L):
+    n = len(L)
+    if n == 0:
+        return 0
+    else:
+        return L[0] + somme_rec(L[1:])
+
+L1 = [1, 8, 9, -3]
+s = somme_rec(L1)
+print(s)
+
+# Factorielle fonction
+def facto_r(n):
+    if n == 0:
+        return 1
+    else:
+        return n * facto_r(n - 1)
+
+n = 6  
+print(facto_r(n))
+
+from time import perf_counter
+
+debut = perf_counter()  
+facto_r(36)  
+fin = perf_counter()  
+
+duree = fin - debut  
+print(f"La durée d'exécution pour fact_r(36) est de {duree:.6f} secondes.")
