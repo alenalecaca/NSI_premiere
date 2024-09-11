@@ -1,0 +1,77 @@
+from time import perf_counter
+# SOMME RECURSIVE
+def somme_rec(L):
+    n = len(L)
+    if n == 0:
+        return 0
+    else:
+        return L[0] + somme_rec(L[1:])
+
+L1 = [1, 8, 9, -3]
+#TIMER 
+debut = perf_counter()  
+somme_rec(L1)
+fin = perf_counter() 
+duree_rec = fin - debut 
+print(f"La durée d'exécution pour somme_rec est de {duree_rec:.6f} secondes.")
+
+
+
+#SOMME ITTERATIVE
+def somme_iterative(L):
+    n =len(L)
+    somme=0
+    for i in range(n):
+        somme += L[i]
+    #print(somme)
+    return(somme)
+s = somme_iterative(L1)
+print(s)
+
+#TIMER
+debut = perf_counter()  
+somme_iterative(L1)
+fin = perf_counter() 
+duree_itter = fin - debut 
+print(f"La durée d'exécution pour somme_iterative est de {duree_itter:.6f} secondes.")
+
+rapport=duree_itter/duree_rec
+print(f"le rapport entre les deux temps est rapport {rapport:f} secondes. ")
+
+################################################
+
+# Factorielle fonction
+def facto_r(n):
+    if n == 0:
+        return 1
+    else:
+        return n * facto_r(n - 1)
+
+n = 6  
+print(facto_r(n))
+
+from time import perf_counter
+
+debut = perf_counter()  
+facto_r(36)  
+fin = perf_counter()  
+
+duree = fin - debut  
+print(f"La durée d'exécution pour facto_r(36) est de {duree:.6f} secondes.")
+
+s = somme_rec(L1)
+print(s)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
