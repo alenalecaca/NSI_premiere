@@ -1,0 +1,12 @@
+ch_r = {"I":1, "V":5, "X":10, "L":50, "C":100, "D":500, "M":1000}
+
+#def convertir(nb_r):
+  """ nb_r: chaine de caractères (type str) qui correspond à un nombre écrit en chiffres romains
+ Renvoie la valeur décimale (type int) de nb_r
+ Exemple : convertir("XIX") renvoie 19
+"""
+ if len(nb_r) == :
+ return ch_r[nb_r[0]]
+ else:
+ if ch_r[nb_r[0]] >=ch_r[nb_r[1]]
+ return ch_r[nb_r[0]] +convertir(nb_r[:1])
