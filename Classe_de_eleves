@@ -63,6 +63,41 @@ print()
 moyenne_classe = (eleve1.moyenne() + eleve2.moyenne() + eleve3.moyenne()) / 3
 print("Moyenne des trois élèves :", moyenne_classe)
 
+def moyenne_par_matiere(liste_eleves):
+    matiere1_total = 0
+    matiere2_total = 0
+    matiere3_total = 0
+    nb_eleves = len(liste_eleves)
+    
+    for eleve in liste_eleves:
+        matiere1_total += eleve.note_mat1
+        matiere2_total += eleve.note_mat2
+        matiere3_total += eleve.note_mat3
+    
+    print({
+        "Programmation": matiere1_total / nb_eleves,
+        "Algorithmique": matiere2_total / nb_eleves,
+        "Projet": matiere3_total / nb_eleves
+    })
+
+
+moyenne_par_matiere([eleve1, eleve2, eleve3])
+
+
+#################################
+
+""""
+def moyenne_par_matiere(liste_eleves):
+   matiere1=0
+   matiere2=0
+   matiere3=0
+   l=len(liste_eleves)
+   for eleves in liste_eleves:
+       matiere1+=eleve1.matiere1+eleve2.matiere1+eleve3.matiere1
+       matiere2+=eleve1.matiere2+eleve2.matiere2+eleve3.matiere2
+       matiere3+=eleve1.matiere3+eleve2.matiere3+eleve3.matiere3
+    print({"Programmation" : matiere1/l,"Algorithmique" : matiere2:l,"Projet": matiere3:l })
+"""
 ########RESULTAT##########################################
 """"
 Alain Térieur
@@ -84,4 +119,21 @@ Projet : 17
 Moyenne : 12.666666666666666"""
 
  ##########################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
