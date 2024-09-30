@@ -1,0 +1,43 @@
+def pile():
+    #retourne une liste vide
+
+    return []
+
+
+# vide
+def vide(p):
+    '''renvoie True si la pile est vide
+et False sinon'''
+    return p==[]
+
+
+# empiler
+def empiler(p,x):
+    "Ajoute l'élément x à la pile p"
+    p.append(x)
+
+# dépiler
+def depiler(p):
+    "dépile et renvoie l'élément au sommet de la pile p"
+    assert not vide(p), "Pile vide"
+    return p.pop()
+
+def taille(p):
+    "retourne la taille de la liste"
+    #=taille()
+    return len(p)
+print(taille([1,8,6,9,5,78,5,75,7,847,4]))
+
+def sommet(p):
+    return len(p-1)
+############################# A FAIRE ##################################################
+
+p=pile()
+for i in range(5):
+    empiler(p,2*i)
+a=depiler(p)
+print(a)
+print(vide(p))
+
+# p=taille()
+# return len(liste)
