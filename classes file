@@ -1,0 +1,43 @@
+class File:
+    ''' classe File
+    création d'une instance File avec une liste
+    '''
+
+    def __init__(self):
+        "Initialisation d'une file vide"
+        self.elements = []  # Corrected the attribute name
+
+    def vide(self):
+        "teste si la file est vide"
+        return len(self.elements) == 0
+
+    def defiler(self):
+        "défile"
+        assert not self.vide()
+        return self.elements.pop(0)  # Dequeue operation, should remove from the front
+
+    def enfiler(self, x):
+        "enfile"
+        self.elements.append(x)
+
+    def taille(self):
+        return len(self.elements)
+
+    def sommet(self):
+        assert not self.vide(), "file vide"
+        return self.elements[0]  # Corrected to return the front element
+
+######################################################################################################
+f = File()
+
+# Enqueue and dequeue elements
+for i in range(5):
+    f.enfiler(2 * i)  # Use the instance method
+    print(f.elements)  # Print the queue after enqueue
+
+a = f.defiler()  # Use the instance method
+print(a)  # Print the dequeued item
+print(f.elements)  # Print the queue after dequeue
+print(f.vide())  # Check if the queue is empty
+print(f.taille())  # Print the size of the queue
+print(f.sommet())  # Print the front element
