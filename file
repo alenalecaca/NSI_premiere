@@ -1,0 +1,45 @@
+def file():
+    return []
+
+
+def vide(f):
+    ''' renvoie True si la file est vide
+False sinon'''
+    return f==[]
+
+
+
+def enfiler(f,x):
+#ajoute x à la file f"
+    return f.append(x)
+
+
+def defiler(f):
+#enlève et renvoie le premier élément de la file
+    assert not vide(f), "file vide"
+    return f.pop(0)
+
+
+
+def taille(f):
+    return len(f)
+
+
+def sommet(f):
+    assert not vide(f)
+    return f[-1]
+
+
+
+#############################################################################################################################################################
+
+f=file()
+for i in range(5):
+    enfiler(f,2*i)
+print(f)
+a=defiler(f)
+print(a)
+print(f)
+print(vide(f))
+print(taille(f))
+print(sommet(f))
