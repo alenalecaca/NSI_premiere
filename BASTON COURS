@@ -1,0 +1,59 @@
+class File:
+    ''' classe File
+    création d'une instance File avec une liste
+    '''
+
+    def __init__(self):
+        "Initialisation d'une file vide"
+        self.elements = []  # Corrected the attribute name
+
+    def vide(self):
+        "teste si la file est vide"
+        return len(self.elements) == 0
+
+    def defiler(self):
+        "défile"
+        assert not self.vide()
+        return self.elements.pop(0)  # Dequeue operation, should remove from the front
+
+    def enfiler(self, x):
+        "enfile"
+        self.elements.append(x)
+
+    def taille(self):
+        return len(self.elements)
+
+    def sommet(self):
+        assert not self.vide(), "file vide"
+        return self.elements[0]  # Corrected to return the front element
+    
+    def affiche(self):
+        assert not self.vide()
+        print("tete <-",end="")
+        print(self.elements,end="")
+        print("]<– queue")
+    
+def croisement(f1,f2):
+    f3=File()
+    while not f1.vide() or not f2.vide():
+        if  not f1.vide() and not f2.vide():
+            V1=f1.depile()
+            V2=f2.depile()
+            if V1==0 and V2==0:
+                f3.enfiler(0)
+            if V1==1 and V2==2:
+                f3.enfiler(1)
+            if V1==0 and V2==2:
+                f3.enfiler(2)
+            if V1==1 and V2==0:
+                f3.enfiler(1)
+        else:
+            if f1.vide():
+                #remplir f3 avec f2
+                 while not f2.vide():
+                    f3.enfiler(f2.depile())
+            else:
+                #remplir f3 avec f1
+             while not f1.vide():
+                    f3.enfiler(f1.depile()) 
+    
