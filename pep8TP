@@ -1,0 +1,19 @@
+"""Ce module vérifie si des entiers aléatoires sont des nombres premiers."""
+from random import randint
+
+
+def ma_fonction(n):
+    """Détermine si un nombre n est premier."""
+    if n < 2:
+        return False
+    fact = 2
+    while fact * fact <= n:
+        if n % fact == 0:
+            return False
+        fact += 1
+    return True
+
+
+for loop in range(100):
+    n = randint(1, 100000)
+    print(n, ma_fonction(n))
