@@ -1,0 +1,56 @@
+def test_premier(n):
+    """tester si un nombre est premier en testant le reste de la
+    division de n par tous les nombres compris entre 2 et n-1
+    """
+    for d in range(2,n):
+        if n%d==0:
+            return False
+    return True
+    
+def liste_premier(taille):
+    """renvoyer une liste de longueur taille contenant
+    les tailles premiers nombres premiers
+    
+    A partir d'une liste vide et d'un nombre test=2
+    si test premier de test est Vrai on l'ajoute dans la 
+    liste,on incremente test et on s'arette quand la longuer
+    de la liste est egal à taille."""
+    test=2
+    liste=[]
+    while len(liste)<taille:
+        if test_premier(test):
+            liste.append(test)
+        test=test+1
+    return liste
+    
+    
+    def vider(sequence):
+        while not est_vide(sequence)
+            defiler(sequence)
+        
+    def affich_seq(sequence):
+        stock=cree_file_vide()
+        ajout(sequence)
+        while not est_vide(sequence):
+            c=defiler(sequence)
+            affichage(c)
+            time.sleep(0.5)
+            ajouter(stock,c):
+        while not est_vide(stock):
+            enfiler(sequence,defiler(stock))
+    
+    
+    def tour_de_jeu(sequence):
+        affich_seq(sequence)
+        stock= cree_file_vide()
+        while not est_vide(sequence):
+            c_joueur = saisie_joueur()
+            c_seq = defiler(sequence)
+            if c_joueur == c_seq:
+                enfiler(stock,c_joueur)
+            else:
+                vider(sequence)
+                
+        while not est_vide(stock):
+            enfiler(sequence, defiler(stock))
+            
