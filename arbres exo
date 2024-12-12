@@ -1,0 +1,115 @@
+import networkx
+
+def creation_arbre(r,profondeur):
+    """r : la racine (str ou int). la profondeur de l’arbre (int)"""
+    Arbre = [r]+[None for i in range(2**(profondeur+1)-2)]
+    return Arbre
+def insertion_noeud(arbre,n,fg,fd):
+    """Insére les noeuds et leurs enfants dans l’arbre"""
+    indice = arbre.index(n)
+    arbre[2*indice+1] = fg
+    arbre[2*indice+2] = fd
+# création de l’arbre
+arbre = creation_arbre("r",5)
+# ajout des noeuds par niveau de gauche à droite
+insertion_noeud(arbre,"r","a","b")
+insertion_noeud(arbre,"a","c","d")
+insertion_noeud(arbre,"b","e","f")
+insertion_noeud(arbre,"c",None,"h")
+insertion_noeud(arbre,"d","i","j")
+insertion_noeud(arbre,"e","k",None)
+insertion_noeud(arbre,"f",None,None)
+insertion_noeud(arbre,"h",None,None)
+insertion_noeud(arbre,"i",None,None)
+insertion_noeud(arbre,"j","m",None)
+insertion_noeud(arbre,"k",None,None)
+insertion_noeud(arbre,"m",None,None)
+#pour vérifier
+print(len(arbre))
+print(arbre)
+def parent(arbre,p):
+    if p in arbre:
+        indice = arbre.index(p)
+        if indice%2 == 0:
+            return arbre[(indice-2)//2]
+        else:
+            return arbre[(indice-1)//2]
+        
+print(parent(arbre,"a"))
+def arbre_vide(arbre):
+    if len(arbre) == 0:
+        return True 
+    else:
+        return False
+print(arbre_vide(arbre))
+def enfants_noeuds(arbre,p):
+    if p in arbre:
+        indice = arbre.index(p)
+        return arbre[indice*2+1],arbre[indice*2+2]
+print(enfants_noeuds(arbre,"a"))
+def fils_gauche(arbre,p):
+    if p in arbre:
+        indice = arbre.index(p)
+        return arbre[indice*2+1]
+print(fils_gauche(arbre,"a"))
+def fils_droite(arbre,p):
+    if p in arbre:
+        indice = arbre.index(p)
+        return arbre[indice*2+2]
+print(fils_droite(arbre,"a"))
+def est_racine(arbre, n):
+    return arbre[0] == n
+
+def est_feuille(arbre, n):
+    if n in arbre:
+        indice = arbre.index(n)
+        return (indice * 2 + 1 >= len(arbre)) or (arbre[indice * 2 + 1] is None and arbre[indice * 2 + 2] is None)
+    return False
+
+def a_frere(arbre, n):
+    if n in arbre:
+        indice = arbre.index(n)
+        if indice == 0:
+            return False 
+        parent_indice = (indice - 1) // 2 if indice % 2 else (indice - 2) // 2
+        frere_gauche = parent_indice * 2 + 1
+        frere_droit = parent_indice * 2 + 2
+        if frere_gauche < len(arbre) and arbre[frere_gauche] == n:
+            return frere_droit < len(arbre) and arbre[frere_droit] is not None
+        elif frere_droit < len(arbre) and arbre[frere_droit] == n:
+            return frere_gauche < len(arbre) and arbre[frere_gauche] is not None
+    return False
+
+dernier_noeud = "a"
+print(est_racine(arbre, "r"))  
+print(est_feuille(arbre, "f"))  
+print(est_feuille(arbre, "a"))  
+print(a_frere(arbre, "a"))  
+print(a_frere(arbre, dernier_noeud))
+
+def noeud(nom, fg=None, fd=None):
+    return {'racine': nom, 'fg': fg, 'fd': fd}
+
+# création des noeuds
+k = noeud('k')
+f = noeud('f')
+e = noeud('e', k, None)
+b = noeud('b', e, f)
+m = noeud('m')
+j = noeud('j', m, None)
+i = noeud('i')
+d = noeud('d', i, j)
+h = noeud('h')
+c = noeud('c', None, h)
+a = noeud('a', c, d)
+racine = noeud('r', a, b)
+
+# création de l’arbre
+def construit(arbre):
+    if arbre is None:
+        return []
+    else:
+        return [arbre['racine'], construit(arbre['fg']), construit(arbre['fd'])]
+
+arbre1 = construit(racine)
+print(arbre1)
