@@ -144,11 +144,17 @@ def parcours_largeur(arbre):
     f.enfiler(arbre)
     while not f.vide():
         tmp=f.defiler()
-        liste = tmp[0]
-        if tmp[1] !=():
+        #print("TEST PARCOURS LARGEUR")
+        #print("tmp=",tmp)
+        liste.append(tmp[0])
+        
+        #print("liste=",liste)
+        if tmp[1] !=[]:
             f.enfiler(tmp[1])
-        if tmp[2] !=():
-         f.enfiler(tmp[2])
+        if tmp[2] !=[]:
+            f.enfiler(tmp[2])
+            
+parcours_largeur(arbre1)
         
 def suffixe_parcours(arbre):
     if arbre is None:
@@ -157,6 +163,7 @@ def suffixe_parcours(arbre):
     suffixe_parcours(arbre['fd'])  
     print(arbre['racine'])  
 
+print("TEST PARCOURS PROFONDEUR SUFFIXE")
 suffixe_parcours(racine)
  
 print()
@@ -168,6 +175,7 @@ def prefixe_parcours(arbre):
     prefixe_parcours(arbre['fg'])
     prefixe_parcours(arbre['fd'])
 
+print("TEST PARCOURS PROFONDEUR PREFIXE")
 prefixe_parcours(racine)
     
 print()
@@ -179,5 +187,8 @@ def infixe_parcours(arbre):
     print(arbre['racine'])  
     infixe_parcours(arbre['fd'])  
 
+print("TEST PARCOURS PROFONDEUR INFIXE")
 infixe_parcours(racine)
     
+    
+    #def parkour
