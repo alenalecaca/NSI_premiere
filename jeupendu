@@ -1,0 +1,81 @@
+solution = "bonjour"
+lettre_trouvee = []
+tentatives_restantes = 6
+
+
+def affiche_mot_restant(solution, lettre_trouvee):
+    for lettre in solution:
+        if lettre in lettre_trouvee:
+            print(lettre, end='')
+        else:
+            print("-", end='')
+    print()
+
+
+def pendu(tentatives_restantes):
+    if tentatives_restantes==5:
+        print("pendu:")
+        print("    ------")
+        print("    |    |")
+        print("    |    O")
+        print("   --------")
+    elif tentatives_restantes==4:
+        print("pendu:")
+        print("    ------")
+        print("    |    |")
+        print("    |    O")
+        print("    |    |")
+        print("   --------")
+    elif tentatives_restantes==3:
+        print("pendu:")
+        print("    ------")
+        print("    |    |")
+        print("    |    O")
+        print("    |   /|")
+        print("   --------")
+    elif tentatives_restantes==2:
+        print("pendu:")
+        print("    ------")
+        print("    |    |")
+        print("    |    O")
+        print("    |   /|\\")
+        print("   --------")
+    elif tentatives_restantes==1:
+        print("pendu:")
+        print("    ------")
+        print("    |    |")
+        print("    |    O")
+        print("    |   /|\\")
+        print("    |   /")
+        print("   --------")
+    elif tentatives_restantes==0:
+        print("pendu:")
+        print("    ------")
+        print("    |    |")
+        print("    |    O")
+        print("    |   /|\\")
+        print("    |   / \\")
+        print("   --------")
+        print("vous etes mort,le mot a trouve etait:",solution)
+
+
+while tentatives_restantes>0:
+    affiche_mot_restant(solution, lettre_trouvee)
+    lettre = input("dites une lettre:").lower() #la fonction lower permet de cacher le resultat
+
+    if lettre in solution:
+        if lettre not in lettre_trouvee:
+            lettre_trouvee.append(lettre)
+            print(f"la lettre '{lettre}' est dans le mot")
+        else:
+            print(f"il ya deja la lettre '{lettre}")
+    else:
+        tentatives_restantes-=1
+        print(f"la lettre '{lettre}' n'est pas dans le mot")
+        pendu(tentatives_restantes)
+
+    if all(lettre in lettre_trouvee for lettre in solution):
+        print("bravo le mot etait:", solution)
+        break
+if all(lettre in lettre_trouvee for lettre in solution):
+    print(f"vous avez reussi avec {tentatives_restantes} erreurs ")
