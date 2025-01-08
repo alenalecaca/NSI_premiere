@@ -99,13 +99,11 @@ trois = Noeud(3)
 diviser = Noeud('/', trois, moins)  
 deux = Noeud(2)
 plus = Noeud('+', deux, diviser)  
-
-
-# pour visualiser
-repr_graph(plus,(4,3),False)
+arbre =  plus
 
 # pour visualiser
-repr_graph(plus,(4,3),False)
+repr_graph(arbre,(4,3),False)
+
 
 def evalue (exp) : 
     if exp.estFeuille() == True : 
@@ -119,4 +117,4 @@ def evalue (exp) :
     elif exp. value == "/": 
         return evalue(exp.left) / evalue(exp. right)
 
-print (evalue(diviser))
+print (evalue(arbre))
