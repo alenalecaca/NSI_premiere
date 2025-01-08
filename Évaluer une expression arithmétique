@@ -92,30 +92,31 @@ def repr_graph(arbre, size=(8,8), null_node=False):
     plt.close()
 
 # création de l'arbre
-quatre = Noeud("4")
-sept = Noeud("7")
+quatre = Noeud(4)
+sept = Noeud(7)
 moins = Noeud('-', quatre, sept)  
-trois = Noeud("3")
+trois = Noeud(3)
 diviser = Noeud('/', trois, moins)  
-deux = Noeud("2")
+deux = Noeud(2)
 plus = Noeud('+', deux, diviser)  
 
 
 # pour visualiser
 repr_graph(plus,(4,3),False)
 
-def evalue(plus):
-    if arbre.estFeuille():
-        return int(arbre.value)
-    gauche = evalue(arbre.left)
-    droite = evalue(arbre.right)
-    if arbre.value == '+':
-        return gauche + droite
-    elif arbre.value == '-':
-        return gauche - droite
-    elif arbre.value == '*':
-        return gauche * droite
-    elif arbre.value == '/':
-        return gauche / droite
-    else:
-        return False
+# pour visualiser
+repr_graph(plus,(4,3),False)
+
+def evalue (exp) : 
+    if exp.estFeuille() == True : 
+        return exp. value 
+    elif exp. value == "+": 
+        return evalue(exp.left) + evalue (exp. right) 
+    elif exp. value == "-": 
+        return evalue (exp. left) - evalue(exp. right) 
+    elif exp. value == "*":
+        return evalue(exp. left) * evalue(exp. right) 
+    elif exp. value == "/": 
+        return evalue(exp.left) / evalue(exp. right)
+
+print (evalue(diviser))
