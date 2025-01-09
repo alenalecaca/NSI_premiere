@@ -1,0 +1,44 @@
+def inserer(arbre, valeur):
+    if valeur < arbre.valeur:
+        if arbre.gauche is None:
+            arbre.gauche = Noeud(valeur)
+            arbre.gauche.parent = arbre
+        else:
+            inserer(arbre.gauche, valeur)
+    elif valeur > arbre.valeur:
+        if arbre.droit is None:
+            arbre.droit = Noeud(valeur)
+            arbre.droit.parent = arbre 
+        else:
+            inserer(arbre.droit, valeur)
+##############################
+# pour tester votre fonction #
+##############################
+abr = Noeud(6)  
+liste = [6,8,3,1,4,9,2,7,5] 
+for el in liste:
+    inserer(abr, el)
+repr_graph(abr, (3,3)) 
+
+# à faire 2
+def inserer(arbre, valeur):
+    if valeur < arbre.valeur:
+        if arbre.gauche is None:
+            arbre.gauche = Noeud(valeur)
+            arbre.gauche.parent = arbre
+        else:
+            inserer(arbre.gauche, valeur)
+    elif valeur > arbre.valeur:
+        if arbre.droit is None:
+            arbre.droit = Noeud(valeur)
+            arbre.droit.parent = arbre 
+        else:
+            inserer(arbre.droit, valeur)
+##############################
+# pour tester votre fonction #
+##############################
+abr = Noeud(18)  
+liste = [5, 37, 43, 4, 12, 13, 19, 36, 3, 18]
+for el in liste:
+    inserer(abr, el)
+repr_graph(abr, (8,8)) 
