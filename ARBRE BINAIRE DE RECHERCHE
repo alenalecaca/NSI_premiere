@@ -42,3 +42,75 @@ liste = [5, 37, 43, 4, 12, 13, 19, 36, 3, 18]
 for el in liste:
     inserer(abr, el)
 repr_graph(abr, (8,8)) 
+
+def prefixe(arbre):
+    if arbre is None:
+        return []
+    return [arbre.valeur]+prefixe(arbre.gauche) + prefixe(arbre.droit)
+
+def infixe(arbre):
+     if arbre is None:
+        return []
+        return infixe(arbre.gauche) + [arbre.valeur] + infixe(arbre.droit)
+
+def suffixe(arbre):
+     if arbre is None:
+        return []
+        print (suffixe(arbre.gauche)+suffixe(arbre.droit)+[arbre.valeur])
+
+def tri(arbre):
+    return infixe(arbre)
+
+
+def maximum(arbre):
+    if arbre.droit:
+        return None
+    while arbre.droit is not None:
+        return arbre.valeur
+
+def minimum(arbre):
+    if arbre is None:
+        return None
+    while arbre.gauche is not None:
+        arbre=arbre.gauche
+    return arbre.valeur
+
+def inserer(arbre, valeur):
+    if valeur < arbre.valeur:
+        if arbre.gauche is None:
+            arbre.gauche = Noeud(valeur)
+            arbre.gauche.parent = arbre
+        else:
+            inserer(arbre.gauche, valeur)
+    elif valeur > arbre.valeur:
+        if arbre.droit is None:
+            arbre.droit = Noeud(valeur)
+            arbre.droit.parent = arbre 
+        else:
+            inserer(arbre.droit, valeur)
+
+L2=['chien','chat','souris','araignée','crapaud','grenouille','lézard','zèbre']
+abr4=Noeud(L2[5])
+
+
+for i in range(1,len(L2)):
+    inserer(abr4,L2[i])
+        
+repr_graph(abr4,(6,3))
+
+def recherche(arbre,valeur):
+    while valeur!=arbre.valeur:
+        if valeur<arbre.valeur:
+            if arbre.gauche is None:
+                return False
+            else:
+                arbre=arbre.gauche
+        else:
+            if arbre.droit is None:
+                return False
+            else:
+                 arbre=arbre.droit
+    return True
+print(recherche(abr4,'tortue'))
+recherche(abr4,'tortue')
+print(recherche(abr4,'crapaud'))
