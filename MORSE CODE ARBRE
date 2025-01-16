@@ -1,0 +1,87 @@
+# à faire 1
+F=Noeud('F',None, None)
+V=Noeud('V' ,None, None)
+H=Noeud('H', None, None)
+J=Noeud('J',None, None)
+P=Noeud('P',None, None)
+L=Noeud('L' ,None, None)
+Q=Noeud('Q' ,None, None)
+Z=Noeud('Z' ,None, None)
+Y=Noeud('Y' ,None, None)
+C=Noeud('C' ,None, None)
+X=Noeud('X' ,None, None)
+B=Noeud('B' ,None, None)
+U=Noeud('U', F,None)
+S=Noeud('S' ,H, V)
+W=Noeud('W',P,J)
+R=Noeud('R',L,None)
+K=Noeud('K',C,Y)
+D=Noeud('D',B,X)
+O=Noeud('O',None,None)
+G=Noeud('G',Z,Q)
+I=Noeud('I',S,U)
+A=Noeud('A',R,W)
+N=Noeud('N',D,K)
+M=Noeud('M',G,O)
+E=Noeud('E',I,A)
+T=Noeud('T',N,M)
+
+
+arbre_morse=Noeud('racine',E,T)
+repr_graph(arbre_morse, (16,5), True)
+
+
+def decode_lettre(arbre,code):
+    for c in code:
+        if c=="-":
+            arbre=arbre.droit
+        if c=="°":
+            arbre=arbre.gauche
+    return arbre.valeur 
+print(decode_lettre(arbre_morse,'-°-°'))
+
+
+def encode_lettre(lettre,chemin,arbre):
+    if arbre is None:
+        return ""
+    elif arbre.valeur == lettre:
+        return chemin
+    else:
+        chg = encode_lettre(lettre, chemin + "°", arbre.gauche)
+        #print("chg",chg,arbre.valeur)
+        chd = encode_lettre(lettre, chemin + "-", arbre.droit)
+        #print("chd",chd,arbre.valeur)
+    #print("gauche+droit",chg+chd)
+    return chg + chd
+
+print(encode_lettre('R',"",arbre_morse))
+
+def encode_message(message,arbre):
+    code=""
+    for lettre in message:
+        if lettre == " ":
+            code += "/"
+        else:
+            code += encode_lettre(lettre,"",arbre)
+        code += "*"
+        
+    return code 
+print(encode_message("VINCENTAS MANGE LES KIKIS DES PETITS NOIRES",arbre_morse))
+
+
+def decode_message(message_code,arbre):
+    message_code=list(message_code.split(" "))
+    
+def decode_message(message_code,arbre):
+    mots_codes=list(message_code.split("/"))
+    message = ""
+    for mot_code in mots_codes:
+        lettres_codes = list(mot_code.split("*"))
+        for lettre_code in lettres_codes:
+            if lettre_code:
+                message += decode_lettre(arbre, lettre_code)
+        message += " "
+    return message.strip()
+
+message_code = "°°°-*°°*-°*-°-°*°*-°*-*°-*°°°*/*--*°-*-°*--°*°*/*°-°°*°*°°°*/*-°-*°°*-°-*°°*°°°*/*-°°*°*°°°*/*°--°*°*-*°°*-*°°°*/*-°*---*°°*°-°*°*°°°*"
+print(decode_message(message_code, arbre_morse))
