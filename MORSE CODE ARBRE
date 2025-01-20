@@ -110,3 +110,15 @@ def encode_dictionnaire(message, dico):
 message = 'RAWR'
 code = encode_dictionnaire(message, dico1)
 print(code) 
+
+def decode_dictionnaire(message,dico):
+    mots_codes=list(message_code.split("/"))
+    message = ""
+    for mot_code in mots_code:
+        lettres_codes = list(mot_code.split("*"))
+        if lettres in dico:
+            message += decode_lettre(arbre, lettre_code)
+        message += " "
+    return message.strip()
+message_code = "°°°-*°°*-°*-°-°*°*-°*-*°-*°°°*/*--*°-*-°*--°*°*/*°-°°*°*°°°*/*-°-*°°*-°-*°°*°°°*/*-°°*°*°°°*/*°--°*°*-*°°*-*°°°*/*-°*---*°°*°-°*°*°°°*"
+print(decode_dictionnaire(message_code,dico1))
