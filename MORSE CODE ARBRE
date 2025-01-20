@@ -85,3 +85,28 @@ def decode_message(message_code,arbre):
 
 message_code = "°°°-*°°*-°*-°-°*°*-°*-*°-*°°°*/*--*°-*-°*--°*°*/*°-°°*°*°°°*/*-°-*°°*-°-*°°*°°°*/*-°°*°*°°°*/*°--°*°*-*°°*-*°°°*/*-°*---*°°*°-°*°*°°°*"
 print(decode_message(message_code, arbre_morse))
+
+def dictionnaire(arbre,chemin,dico):
+    if arbre is not None:
+        if arbre.valeur != "":
+            dico[arbre.valeur] = chemin
+        dictionnaire(arbre.gauche,chemin + "°",dico)
+        dictionnaire(arbre.droit,chemin + "-",dico)
+    return dico
+
+dico1=dictionnaire(arbre_morse,'',{})
+print(dico1)
+print(dico1['Z'])
+dico1['Z']
+
+def encode_dictionnaire(message, dico):
+    code = ""
+    for lettre in message:  
+        if lettre in dico:
+            code += dico[lettre] + " "  
+        else:
+            code += "."  
+    return code.strip()
+message = 'RAWR'
+code = encode_dictionnaire(message, dico1)
+print(code) 
