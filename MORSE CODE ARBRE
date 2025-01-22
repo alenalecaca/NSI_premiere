@@ -68,9 +68,6 @@ def encode_message(message,arbre):
     return code 
 print(encode_message("VINCENTAS MANGE LES KIKIS DES PETITS NOIRES",arbre_morse))
 
-
-def decode_message(message_code,arbre):
-    message_code=list(message_code.split(" "))
     
 def decode_message(message_code,arbre):
     mots_codes=list(message_code.split("/"))
@@ -85,6 +82,10 @@ def decode_message(message_code,arbre):
 
 message_code = "°°°-*°°*-°*-°-°*°*-°*-*°-*°°°*/*--*°-*-°*--°*°*/*°-°°*°*°°°*/*-°-*°°*-°-*°°*°°°*/*-°°*°*°°°*/*°--°*°*-*°°*-*°°°*/*-°*---*°°*°-°*°*°°°*"
 print(decode_message(message_code, arbre_morse))
+
+1: la fonction est recursive qui fait appel a elle meme deux fois,ca condition darret est 
+(if arbre is none) donc quand arrive au noeud fantome
+2: il sagit dun parcours prefixe
 
 def dictionnaire(arbre,chemin,dico):
     if arbre is not None:
