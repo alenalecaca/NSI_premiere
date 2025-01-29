@@ -1,0 +1,286 @@
+import timeit
+
+
+# classe Noeud
+class Noeud:
+    def __init__(self, valeur, gauche = None, droit = None):
+        self.valeur = valeur
+        self.gauche = gauche
+        self.droit = droit
+
+        
+    def __str__(self):
+        return str(self.valeur)
+    
+# fonction hauteur
+# la hauteur de la racine est ici de 1
+# remplacer 0 par -1 si on souhaite une hauteur de 0 pour la racine
+def hauteur(arbre):
+    if arbre is None:
+        return 0
+    else:
+        return 1 + max(hauteur(arbre.gauche), hauteur(arbre.droit))
+    
+#################### Code pour afficher l'arbre
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def repr_graph(arbre, size=(8,8), null_node=False):
+    """
+    size : tuple de 2 entiers. Si size est int -> (size, size)
+    null_node : si True, trace les liaisons vers les sous-arbres vides
+    """
+    def parkour(arbre, noeuds, branches, labels, positions, profondeur, pos_courante, pos_parent, null_node):
+        if arbre is not None:
+            noeuds[0].append(pos_courante)
+            positions[pos_courante] = (pos_courante, profondeur)
+            profondeur -= 1
+            labels[pos_courante] = str(arbre.valeur)
+            branches[0].append((pos_courante, pos_parent))
+            pos_gauche = pos_courante - 2**profondeur
+            parkour(arbre.gauche, noeuds, branches, labels, positions, profondeur, pos_gauche, pos_courante, null_node)
+            pos_droit = pos_courante + 2**profondeur
+            parkour(arbre.droit, noeuds, branches, labels, positions, profondeur, pos_droit, pos_courante, null_node)
+        elif null_node:
+            noeuds[1].append(pos_courante)
+            positions[pos_courante] = (pos_courante, profondeur)
+            branches[1].append((pos_courante, pos_parent))
+    
+    
+    if arbre is None:
+        return
+    
+    branches = [[]]
+    profondeur = hauteur(arbre)
+    pos_courante = 2**profondeur
+    noeuds = [[pos_courante]]
+    positions = {pos_courante: (pos_courante, profondeur)} 
+    labels = {pos_courante: str(arbre.valeur)}
+    
+    if null_node:
+        branches.append([])
+        noeuds.append([])
+        
+    profondeur -= 1
+    parkour(arbre.gauche, noeuds, branches, labels, positions, profondeur, pos_courante - 2**profondeur, pos_courante, null_node)
+    parkour(arbre.droit, noeuds, branches, labels, positions, profondeur, pos_courante + 2**profondeur, pos_courante, null_node) 
+
+    mon_arbre = nx.Graph()
+    
+    if type(size) == int:
+        size = (size, size)    
+    plt.figure(figsize=size)
+    
+    nx.draw_networkx_nodes(mon_arbre, positions, nodelist=noeuds[0], node_color="white", node_size=550, edgecolors="blue")
+    nx.draw_networkx_edges(mon_arbre, positions, edgelist=branches[0], edge_color="black", width=2)
+    nx.draw_networkx_labels(mon_arbre, positions, labels)
+
+    if null_node:
+        nx.draw_networkx_nodes(mon_arbre, positions, nodelist=noeuds[1], node_color="white", node_size=50, edgecolors="grey")
+        nx.draw_networkx_edges(mon_arbre, positions, edgelist=branches[1], edge_color="grey", width=1)
+
+    ax = plt.gca()
+    ax.margins(0.1)
+    plt.axis("off")
+    plt.show()
+    plt.close()
+##############################
+d = Noeud('d',None,None)
+a = Noeud('a',None,None)
+c = Noeud('c',None,None)
+rg = Noeud('1',a,None)
+rd= Noeud('2',c,d)
+arbre1 = Noeud('racine',rg,rd)
+repr_graph(arbre1,(3,3),True)
+#############################
+# à faire 1
+F=Noeud('F',None, None)
+V=Noeud('V' ,None, None)
+H=Noeud('H', None, None)
+J=Noeud('J',None, None)
+P=Noeud('P',None, None)
+L=Noeud('L' ,None, None)
+Q=Noeud('Q' ,None, None)
+Z=Noeud('Z' ,None, None)
+Y=Noeud('Y' ,None, None)
+C=Noeud('C' ,None, None)
+X=Noeud('X' ,None, None)
+B=Noeud('B' ,None, None)
+U=Noeud('U', F,None)
+S=Noeud('S' ,H, V)
+W=Noeud('W',P,J)
+R=Noeud('R',L,None)
+K=Noeud('K',C,Y)
+D=Noeud('D',B,X)
+O=Noeud('O',None,None)
+G=Noeud('G',Z,Q)
+I=Noeud('I',S,U)
+A=Noeud('A',R,W)
+N=Noeud('N',D,K)
+M=Noeud('M',G,O)
+E=Noeud('E',I,A)
+T=Noeud('T',N,M)
+
+
+arbre_morse=Noeud('racine',E,T)
+repr_graph(arbre_morse, (16,5), True)
+
+################################
+
+
+def decode_lettre(arbre,code):
+    for c in code:
+        if c=="-":
+            arbre=arbre.droit
+        if c=="°":
+            arbre=arbre.gauche
+    return arbre.valeur 
+print(decode_lettre(arbre_morse,'-°-°'))
+
+
+###############################
+
+
+def encode_lettre(lettre,chemin,arbre):
+    if arbre is None:
+        return ""
+    elif arbre.valeur == lettre:
+        return chemin
+    else:
+        chg = encode_lettre(lettre, chemin + "°", arbre.gauche)
+        #print("chg",chg,arbre.valeur)
+        chd = encode_lettre(lettre, chemin + "-", arbre.droit)
+        #print("chd",chd,arbre.valeur)
+    #print("gauche+droit",chg+chd)
+    return chg + chd
+
+print(encode_lettre('R',"",arbre_morse))
+
+
+##############################
+
+
+def encode_message(message,arbre):
+    code=""
+    for lettre in message:
+        if lettre == " ":
+            code += "/"
+        else:
+            code += encode_lettre(lettre,"",arbre)
+        code += "*"
+        
+    return code 
+print(encode_message("MONSIEUR GRAVA EST LE KING",arbre_morse))
+
+def test_encode_arbre():
+    encode_message("MONSIEUR GRAVA EST LE KING", arbre_morse)
+
+##############################
+
+def decode_message(message_code,arbre):
+    mots_codes=list(message_code.split("/"))
+    message = ""
+    for mot_code in mots_codes:
+        lettres_codes = list(mot_code.split("*"))
+        for lettre_code in lettres_codes:
+            if lettre_code:
+                message += decode_lettre(arbre, lettre_code)
+        message += " "
+    return message.strip()
+
+message_code = " --*---*-°*°°°*°°*°*°°-*°-°*/*--°*°-°*°-*°°°-*°-*/*°*°°°*-*/*°-°°*°*/*-°-*°°*-°*--°*"
+print(decode_message(message_code, arbre_morse))
+
+def test_decode_arbre():
+    message_code = encode_message("MONSIEUR GRAVA EST LE KING", arbre_morse)
+    decode_message(message_code, arbre_morse)
+
+
+###########################
+"""
+1: la fonction est recursive qui fait appel a elle meme deux fois,ca condition darret est 
+(if arbre is none) donc quand arrive au noeud fantome
+2: il sagit dun parcours prefixe
+"""
+##########################
+
+
+def dictionnaire(arbre,chemin,dico):
+    if arbre is not None:
+        if arbre.valeur != "":
+            dico[arbre.valeur] = chemin
+        dictionnaire(arbre.gauche,chemin + "°",dico)
+        dictionnaire(arbre.droit,chemin + "-",dico)
+    return dico
+
+dico1=dictionnaire(arbre_morse,'',{})
+print(dico1)
+print(dico1['Z'])
+dico1['Z']
+
+
+###########################
+
+def encode_dictionnaire(message, dico):
+    code = ""
+    for lettre in message:  
+        if lettre in dico:
+            code += dico[lettre] + " "  
+        else:
+            code += "."  
+    return code.strip()
+message = 'RAWR'
+code = encode_dictionnaire(message, dico1)
+print(code) 
+
+def test_encode_dico():
+    encode_dictionnaire("MONSIEUR GRAVA EST LE KING", dico1)
+
+############################
+"""
+    $$\ $$\                     
+      $$ |\__|                    
+ $$$$$$$ |$$\  $$$$$$$\  $$$$$$\  
+$$  __$$ |$$ |$$  _____|$$  __$$\ 
+$$ /  $$ |$$ |$$ /      $$ /  $$ |
+$$ |  $$ |$$ |$$ |      $$ |  $$ |
+\$$$$$$$ |$$ |\$$$$$$$\ \$$$$$$  |
+ \_______|\__| \_______| \______/ 
+                                  
+                                """
+############################
+
+def decode_dictionnaire(message, dico):
+    decoded_message = ""
+    words = message.strip().split("/")  
+    for word in words:
+        letters = word.split("*")  
+        for morse_letter in letters:
+            if morse_letter:  
+                for lettre, code in dico.items():
+                    if code == morse_letter:
+                        decoded_message += lettre
+                        break
+        decoded_message += " "  
+    return decoded_message.strip()
+message_code = "--*---*-°*°°°*°°*°*°°-*°-°*/*--°*°-°*°-*°°°-*°-*/*°*°°°*-*/*°-°°*°*/*-°-*°°*-°*--°*"
+print("Message codé :", message_code)
+decoded_message = decode_dictionnaire(message_code, dico1)
+print("Message décodé :", decoded_message)    
+
+
+def test_decode_dico():
+    message_code = encode_dictionnaire("des enfers, et compliquantd’une fatalité humaine la destinée qui est divine ; tants.", dico1)
+    decode_dictionnaire(message_code, dico1)
+    
+    
+##############################
+
+if __name__ == "__main__":
+    print("Temps arbre binaire:")
+    print(f"encode:{timeit.timeit(test_encode_arbre, number=1000):.6f} secondes")
+    print(f"decode:{timeit.timeit(test_decode_arbre, number=1000):.6f} secondes")
+    ("")
+    print("Temps dictionnaire:")
+    print(f"encode:{timeit.timeit(test_encode_dico, number=1000):.6f} secondes")
+    print(f"decode:{timeit.timeit(test_decode_dico, number=1000):.6f} secondes")
