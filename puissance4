@@ -1,0 +1,105 @@
+nb_lignes = 6
+nb_colonnes = 7
+grille = []
+jeton= [1,2]
+ 
+for i in range(nb_lignes):
+    grille.append([0] * nb_colonnes)
+ 
+def affiche_grille(grille):
+    for l in grille:
+        for e in l:
+            print(e, end=' ')
+        print()
+ 
+def inserer_jeton(grille, colonne, jeton):
+    #vérifie si la colonne est pleine
+    if grille[0][colonne] != 0:
+        print(f"la colonne {colonne} est pleine")
+        return -1 
+    
+   
+    #cherche la première case vide depuis le bas
+    pos_ligne=nb_lignes-1
+    while pos_ligne >=0 and grille[pos_ligne][colonne]!=0:
+        pos_ligne -= 1
+ 
+    #place le jeton
+    grille[pos_ligne][colonne]=jeton
+    return pos_ligne
+##############
+"""
+def verifier_victoire(grille, jeton):
+    # vérification des lignes
+    for ligne in range(nb_lignes):
+        for col in range(nb_colonnes-3):
+            if all(grille[ligne][col+i]==jeton for i in range(4)):
+                print(f"Le joueur avec le jeton {jeton} a gagne")
+                return True
+ 
+    # vérification des colonnes
+    for col in range(nb_colonnes):
+        for ligne in range(nb_lignes-3):
+            if all(grille[ligne+i][col]==jeton for i in range(4)):
+                print(f"Le joueur avec le jeton {jeton} a gagne")
+                return True
+ 
+    # vérification des diagonales montantes
+    for ligne in range(3, nb_lignes):
+        for col in range(nb_colonnes-3):
+            if all(grille[ligne-i][col+i]==jeton for i in range(4)):
+                print(f"Le joueur avec le jeton {jeton} a gagne")
+                return True
+ 
+    # vérification des diagonales descendantes
+    for ligne in range(nb_lignes -3):
+        for col in range(nb_colonnes-3):
+            if all(grille[ligne+i][col+i] == jeton for i in range(4)):
+                print(f"Le joueur avec le jeton {jeton} a gagne")
+                return True
+ 
+    return False
+ 
+if verifier_victoire(grille, 1):
+    print("Le joueur 1 a gagne")
+else:
+    print("Aucun gagnant")
+    
+if verifier_victoire(grille, 2):
+    print("Le joueur 2 a gagne")
+else:
+    pass
+"""
+################
+ 
+#haut gauche 
+def test_alignement(grille,ligne,colonne,jeton):
+ #############test de DIAGONALES MONTANTES ###############
+    decalage=(+1,-1)
+    nb_alignement=1
+    jeton=grille[ligne][colonne]
+    ligne_courante=ligne+decalage[0]
+    colonne_courante=colonne+decalage[1]
+    print(ligne_courante,colonne_courante)
+    while nb_alignement < 4 and colonne_courante<len(grille[0]) and colonne_courante>=0 :
+        ligne_courante+=decalage[0]
+        colonne_courante+=decalage[1]
+        print(ligne_courante,colonne_courante)
+        if ligne_courante < len(grille) and grille[ligne_courante][colonne_courante]==jeton:
+            nb_alignement += 1
+        
+    #autre sens    
+    decalage=(-1,+1)
+    ligne_courante=ligne+decalage[0]
+    colonne_courante=colonne+decalage[1]
+    print(ligne_courante,colonne_courante)
+ 
+    while nb_alignement < 4 and colonne_courante < len(grille[0]) and colonne_courante>=0:
+        ligne_courante += decalage[0]
+        colonne_courante += decalage[1]
+        print(ligne_courante,colonne_courante)
+        if ligne_courante < len(grille) and grille[ligne_courante][colonne_courante]==jeton:
+            nb_alignement += 1
+ 
+    if nb_alignement >= 4: 
+     print(f"le joeur{jeton} a gagne")
