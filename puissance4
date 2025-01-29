@@ -103,3 +103,18 @@ def test_alignement(grille,ligne,colonne,jeton):
  
     if nb_alignement >= 4: 
      print(f"le joeur{jeton} a gagne")
+  
+##################test de HAUT EN BAS#################@##@
+
+    decalage=(+1, 0)
+    nb_alignement=1
+    ligne_courante=ligne+decalage[0]
+    colonne_courante=colonne+decalage[1]
+
+    while nb_alignement < 4 and ligne_courante < len(grille):
+        if grille[ligne_courante][colonne_courante] == jeton:
+            nb_alignement += 1
+        ligne_courante += decalage[0]
+
+    if nb_alignement >= 4:
+        print(f"Le joueur {jeton} a gagne")
