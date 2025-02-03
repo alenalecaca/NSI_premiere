@@ -1,0 +1,17 @@
+def puissance_iterative(x,n):
+    """ x int
+    n int ,n>=0
+    Renvoie x^n"""
+    a = 1
+    for i in range(n):
+        a=x*x
+    return a
+print(puissance_iterative(8,3))
+
+def puissance_recursive(x,n):
+    if n == 0:
+        return 1
+    else:
+        return x*puissance_recursive(x, n-1)
+
+print(puissance_recursive(8,3))
