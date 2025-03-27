@@ -1,0 +1,117 @@
+# -*- coding: utf-8 -*-
+"""
+Lycée Jean Moulin Draguignan
+NSI Terminale Année ...........
+TD - Parcours en largeur d’un graphe - BFS
+La méthode - BFS(Breadth First Search)
+Parcourir un graphe en largeur à partir d’un sommet, consiste à visiter le sommet puis ses
+enfants, puis les enfants de ses enfants...
+Comme on l’a déjà vu avec les arbres, il faut utiliser une file et une liste pour marquer les
+sommets visités..
+Prenons en exemple ce graphe :
+On dispose d’un graphe(G), d’une liste(sommet_visité) et d’une file(f)
+Le sommet de départ est par exemple ’b’, on l’enfile.
+Puis tant que la file n’est pas vide :
+• On défile f dans une variable par exemple tmp
+• Si tmp n’est pas dans sommet_visité
+• On l’ajoute à sommet_visité
+• Pour chaque voisin de tmp
+• S’il n’est ni dans sommet_visité ni dans la file
+• On l’enfile
+• On renvoie sommet_visité
+Voici les contenus des variables au premier tour de la boucle tant que 
+"""
+
+from collections import deque
+
+def bfs(graph, start):
+    visited = []  # Liste des sommets visités
+    queue = deque([start])  # File pour le parcours
+    
+    while queue:
+        node = queue.popleft()  # On défile un sommet
+        
+        if node not in visited:
+            visited.append(node)  # On marque le sommet comme visité
+            
+            # Ajouter les voisins non visités à la file
+            for neighbor in graph.get(node, []):
+                if neighbor not in visited and neighbor not in queue:
+                    queue.append(neighbor)
+    
+    return visited
+
+# Exemple de graphe représenté sous forme de dictionnaire d'adjacence
+graph = {
+    'a': ['b', 'c'],
+    'b': ['a', 'd', 'e'],
+    'c': ['a', 'f'],
+    'd': ['b'],
+    'e': ['b', 'f'],
+    'f': ['c', 'e']
+}
+
+# Lancer le parcours BFS à partir du sommet 'b'
+result = bfs(graph, 'b')
+print("Parcours en largeur :", result)
+ ####################################
+ 
+class File:
+    """ classe File
+    création d’une instance File avec une liste
+    """
+    def __init__(self):
+        self.L = []
+
+    def vide(self):
+        return self.L == []
+
+    def defiler(self):
+        assert not self.vide(), "file vide"
+        return self.L.pop(0)
+
+    def enfiler(self,x):
+        self.L.append(x)
+
+    def taille(self):
+        return len(self.L)
+
+    def sommet(self):
+        return self.L[0]
+
+    def present(self,x):
+        return x in self.L
+
+
+G = dict()
+G["a"] = ["b", "c"]
+G["b"] = ["a", "d", "e"]
+G["c"] = ["a", "d"]
+G["d"] = ["b", "c", "e"]
+G["e"] = ["b", "d", "f", "g"]
+G["f"] = ["e", "g"]
+G["g"] = ["e", "f", "h"]
+G["h"] = ["g"]
+
+def voisins(G, sommet):
+    return G[sommet]
+
+def parcours_largeur(G, sommet):
+    sommet_visite = []
+    f = File()
+    f.enfiler(sommet)
+
+    while not f.vide():
+        tmp = f.defiler()
+        print(tmp)  # Affichage du sommet en cours
+
+        if tmp not in sommet_visite:
+            sommet_visite.append(tmp)
+
+        for voisin in voisins(G, tmp):
+            if voisin not in sommet_visite and not f.present(voisin):
+                f.enfiler(voisin)
+
+    return sommet_visite
+
+parcours_largeur(G, "a")
