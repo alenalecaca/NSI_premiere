@@ -95,7 +95,7 @@ G["h"] = ["g"]
 
 def voisins(G, sommet):
     return G[sommet]
-
+"""" A FAIRE 1 """""
 def parcours_largeur(G, sommet):
     sommet_visite = []
     f = File()
@@ -103,7 +103,7 @@ def parcours_largeur(G, sommet):
 
     while not f.vide():
         tmp = f.defiler()
-        print(tmp)  # Affichage du sommet en cours
+        print(tmp)  
 
         if tmp not in sommet_visite:
             sommet_visite.append(tmp)
@@ -115,3 +115,28 @@ def parcours_largeur(G, sommet):
     return sommet_visite
 
 parcours_largeur(G, "a")
+
+def bfs_recur(G, f, sommets_visites):
+    if f.vide():
+        return None  # Arrêt de la récursion
+
+    tmp = f.defiler()  # Étape 1 : On défile un élément
+    print(tmp, end=" ")  # On affiche le sommet
+
+    for u in voisins(G, tmp):  # Étape 2 : On explore les voisins
+        if u not in sommets_visites:  # Étape 3 : Vérification des sommets non visités
+            sommets_visites.append(u)  # Étape 4 : Marquer comme visité
+            f.enfiler(u)  # Étape 4 : Ajouter dans la file
+
+    bfs_recur(G, f, sommets_visites)  # Étape 5 : Appel récursif
+
+# Initialisation
+f = File()
+sommets_visites = []
+sommet = "b"
+
+f.enfiler(sommet)
+sommets_visites.append(sommet)
+
+# Exécution du BFS récursif
+bfs_recur(G, f, sommets_visites)
