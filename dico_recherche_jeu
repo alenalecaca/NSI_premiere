@@ -1,0 +1,176 @@
+ 
+DICO = ["aime", "auge", "baie", "brie", "bris", "bure", "cage", "cale", "came", "cape",
+        "cime", "cire", "cris", "cure", "dame", "dime", "dire", "ducs", "dues", "duos",
+        "dure", "durs", "fart", "fors", "gage", "gaie", "gais", "gale", "gare", "gars",
+        "gris", "haie", "hale", "hors", "hure", "iris", "juge", "jure", "kart", "laie",
+        "lame", "lime", "lire", "loge", "luge", "mage", "maie", "male", "mare", "mari",
+        "mars", "mere", "mers", "mime", "mire", "mors", "muet", "mure", "murs", "nage",
+        "orge", "ours", "page", "paie", "pale", "pame", "pane", "pape", "pare", "pari",
+        "part", "paru", "pere", "pers", "pipe", "pire", "pore", "prie", "pris", "pues",
+        "purs", "rage", "raie", "rale", "rame", "rape", "rare", "rime", "rire", "sage",
+        "saie", "sale", "sape", "sari", "scie", "sure", "taie", "tale", "tape", "tare",
+        "tari", "tige", "toge", "tore", "tors", "tort", "trie", "tris", "troc", "truc"]
+ 
+def distance(mot1,mot2,k):
+    # calcule la distance entre 2 mots de k lettres
+    i = 0
+    dist = 0
+    while i < k:
+        if mot1[i] != mot2[i]:
+            dist = dist + 1
+        i =i + 1
+    return dist
+def creation():
+    # crée le dictionnaire des mots adjacents au mot de la liste
+    g={}
+    for element1 in DICO:
+        liste=[]
+        for element2 in DICO:
+            if distance(element1,element2,4) == 1:
+                liste.append(element2)
+        g[element1] = liste
+    return g
+graphe=creation()
+print(graphe['ours'])
+ 
+
+
+ 
+###########################################################
+class Pile:
+    def __init__(self):
+        self.L = []
+ 
+    def empiler(self, element):
+        self.L.append(element)
+ 
+    def depiler(self):
+        if not self.vide():
+            return self.L.pop()
+        else:
+            raise IndexError("La pile est vide")
+ 
+    def vide(self):
+        return len(self.L) == 0
+
+######PARCOURS DU GRAPHE#######
+
+def parcours_profondeur(graphe, sommet, arrivee):
+    p = Pile()
+    parents = {sommet: None}
+    p.empiler(sommet)
+    
+    while not p.vide():
+        tmp = p.depiler()
+        
+        if tmp == arrivee:
+            break
+        
+        for voisin in graphe[tmp]:
+            if voisin not in parents:
+                parents[voisin] = tmp
+                p.empiler(voisin)
+    
+    chemin = []
+    courant = arrivee
+    while courant is not None:
+        chemin.insert(0, courant)
+        courant = parents[courant]
+    
+    return chemin
+
+graphe = creation()
+resultat = parcours_profondeur(graphe, 'ours', 'cage')
+print("parcours plus long : ",resultat)
+
+
+
+############################################################
+
+
+def Solution(end, parents):
+    """
+ 
+    """
+    solution = []
+    courant = end
+    while courant != None:
+        solution = [courant] + solution
+        courant = parents[courant]
+    return solution
+ 
+def solve(graphe, depart, arrivee):
+    """
+ 
+    """
+    candidats = Pile()
+    candidats.empiler(depart)
+    visite = dict()
+    visite[depart] = None
+    trouve = False
+    while candidats.vide() == False and not trouve:
+        courant = candidats.depiler()
+        if courant == arrivee:
+            trouve = True
+        else:
+            for value in graphe[courant]:
+                if not value in visite and not value in candidats.L:
+                    visite[value] = courant
+                    candidats.empiler(value)
+    if trouve:
+        return Solution(arrivee, visite)
+    else:
+        return None
+ 
+solve(graphe, 'ours', 'cage')
+ 
+####
+class File:
+    def __init__(self):
+        self.elements = []
+ 
+    def vide(self):
+        return len(self.elements) == 0
+ 
+    def defiler(self):
+        assert not self.vide()
+        return self.elements.pop(0)
+ 
+    def enfiler(self, x):
+        self.elements.append(x)
+ 
+    def taille(self):
+        return len(self.elements)
+ 
+    def sommet(self):
+        assert not self.vide(), "file vide"
+        return self.elements[0]
+
+def parcours_largeur(graphe, sommet, arrivee):
+    f = File()
+    f.enfiler(sommet)
+    parents = {sommet: None}
+    liste_visite = [sommet]
+    
+    while not f.vide():
+        s = f.defiler()
+        if s == arrivee:
+            break
+        
+        for voisin in graphe[s]:
+            if voisin not in liste_visite:
+                f.enfiler(voisin)
+                liste_visite.append(voisin)
+                parents[voisin] = s
+    
+    chemin = []
+    courant = arrivee
+    while courant is not None:
+        chemin.insert(0, courant)
+        courant = parents[courant]
+    
+    return chemin
+
+graphe = creation()
+resultat = parcours_largeur(graphe, 'ours', 'cage')
+print("parcours plus court : ",resultat)
