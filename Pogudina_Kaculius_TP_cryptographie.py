@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+https://hmalherbe.fr/thalesm/gestclasse/documents/Terminale_NSI/2020-2021/TP/TP_Term_NSI_cryptographie/TP_Term_NSI_cryptographie.html
+
+
 """
 Question 1 : Démontrer la propriété (1) à l'aide de tables de vérité.
 
