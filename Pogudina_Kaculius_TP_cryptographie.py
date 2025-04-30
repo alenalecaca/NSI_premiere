@@ -34,7 +34,7 @@ def convertit_texte_en_binaire(texte):
 
 
 resultat = convertit_texte_en_binaire("NSI")
-print(resultat)  
+print("le texte convertit en binaire est :",resultat)  
 
 
 ############################################
@@ -45,4 +45,30 @@ Question 3 : Convertisseur binaire en entier base
 
 
 def convertit_binaire_vers_entier_base_10(binaire):
+    return int(binaire,2)
+
+resultat = convertit_binaire_vers_entier_base_10("010100")
+print("le binaire convertit en entier de base 10 est:",resultat)
+
+###############################################
+
+"""
+Question 4 : Convertit binaire en texte 
+"""
+
+def convertit_binaire_en_texte(chaine_binaire):
     
+    texte = ''
+    for i in range(0,len(chaine_binaire),8):
+        o = chaine_binaire[i:i+8]
+        char = chr(int(o,2))
+        texte += char 
+    return texte 
+
+print(convertit_binaire_en_texte("010011100101001101001001"))
+
+
+
+####################################################
+
+
