@@ -18,10 +18,16 @@ Propriété : XOR(XOR(A,B),B) = A (1)
    ----------------------------
    | 1 | 1 |    0   | 1 |  1  |
    ----------------------------
+ 
+ aide personelle : 
+ 
+   A.  ou.   B.     =
+   0         0      0
+   1.        0      1
+   0         1      1 
+   1         1      1
    
-
-            
-
+ 
 ############################################
 
 
@@ -30,14 +36,14 @@ Question 2 : Convertisseur texte en binaire
 """
 
 def convertit_texte_en_binaire(texte):
-    code_numero = [format(ord(char), '08b') for char in texte]
-    
-    
-    return ''.join(code_numero)
+    binaire = ''
+    for char in texte:
+        code = format(ord(char), '08b')
+        binaire += code
+    return binaire
 
+print("conversion texte en binaire : ",convertit_texte_en_binaire("SPECIALITE NSI"))
 
-resultat = convertit_texte_en_binaire("NSI")
-print("le texte convertit en binaire est :",resultat)  
 
 
 ############################################
@@ -68,10 +74,39 @@ def convertit_binaire_en_texte(chaine_binaire):
         texte += char 
     return texte 
 
-print(convertit_binaire_en_texte("010011100101001101001001"))
+print("conversion du binaire en texte : ",convertit_binaire_en_texte("010011100101001101001001"))
 
 
 
 ####################################################
+""" 
+Question 5 : Chiffrer la chaine binaire en message chiffre 
+
+"""
+def chiffre_xor(chaine_binaire,clef_binaire) : 
+    resultat = ''
+    index_cle = 0 
+    for char in chaine_binaire:
+        bit=int(clef_binaire[index_cle])^int(char)
+        resultat += str(bit)
+        index_cle += 1
+        if index_cle == len(clef_binaire):
+            index_cle = 0 
+            
+    return resultat
+        
+######################################
+message = "SPECIALITE NSI"
+clef = "TERM"
+message_binaire = convertit_texte_en_binaire(message)
+print(message,"en binaire",message_binaire)
+clef_binaire = convertit_texte_en_binaire(clef)
+print(clef,"en binaire",clef_binaire)
+message_binaire_chiffre = chiffre_xor(message_binaire,clef_binaire)
+print("message chiffré",message_binaire_chiffre)
+message_binaire_dechiffre = chiffre_xor(message_binaire_chiffre,clef_binaire)
+print("message_binaire_dechiffre",message_binaire_dechiffre)
+print("message dechiffré en ASCII",convertit_binaire_en_texte(message_binaire_dechiffre))
+
 
 
