@@ -110,3 +110,94 @@ print("message dechiffré en ASCII",convertit_binaire_en_texte(message_binaire_d
 
 
 
+########################ASYMETRIQUE###########################
+def genere_clefs_publique_et_privee(a1, b1, a2, b2):
+    M = a1 * b1 - 1
+    e = a2 * M + a1
+    d = b2 * M + b1
+    n = (e * d - 1) // M
+    clef_publique = (e, n)
+    clef_privee = (d, n)
+    return clef_publique, clef_privee
+
+# Exemple simple
+clef_publique, clef_privee = genere_clefs_publique_et_privee(5, 3, 7, 5)
+print("Clé publique :", clef_publique)
+print("Clé privée :", clef_privee)
+
+
+
+def chiffre_message(message, clef_publique):
+    e, n = clef_publique
+    message_chiffre = []
+    for caractere in message:
+        ascii_caractere = ord(caractere)
+        chiffre = (ascii_caractere * e) % n
+        message_chiffre.append(chiffre)
+    return message_chiffre
+
+# Exemple de chiffrement avec la clé publique (103, 537)
+message_chiffre = chiffre_message("a", (103, 537))
+print("Message chiffré :", message_chiffre)
+
+
+
+def dechiffre_message(message_chiffre, clef_privee):
+    d, n = clef_privee
+    message_dechiffre = ""
+    for chiffre in message_chiffre:
+        ascii_caractere = (chiffre * d) % n
+        caractere = chr(ascii_caractere)
+        message_dechiffre += caractere
+    return message_dechiffre
+
+# Exemple de déchiffrement
+message_original = dechiffre_message([325], (73, 537))
+print("Message déchiffré :", message_original)
+
+
+
+def bruteForceKidRSA(e, n):
+    for d in range(1, n):
+        if (e * d - 1) % n == 0:
+            return d
+    return None
+
+# Exemple d'attaque :
+e = 53447
+n = 5185112
+d = bruteForceKidRSA(e, n)
+print("Clé privée trouvée par force brute :", d)
+
+
+
+
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+def modinv(e, n):
+    g, x, y = egcd(e, n)
+    if g != 1:
+        return None
+    else:
+        return x % n
+
+
+e = 230884490440319
+n = 194326240259798261076
+d = modinv(e, n)
+print("Clé privée trouvée avec Euclide étendu :", d)
+
+
+# Q13:
+
+# taille des clés couramment utilisées par RSA :
+#   Actuellement, la taille standard pour sécuriser les données sur Internet avec RSA est généralement de 2048 bits. Pour une sécurité renforcée, certaines applications sensibles utilisent même des clés de 4096 bits.
+
+# *Nouvelle technologie pouvant casser RSA rapidement :
+#   La **technologie quantique** (ordinateurs quantiques) représente une menace sérieuse pour RSA. Un ordinateur quantique puissant pourrait casser le chiffrement RSA (en factorisant rapidement de grands nombres premiers) en quelques secondes ou minutes, là où un ordinateur classique prendrait des milliers d'années.
+
