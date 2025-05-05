@@ -1,0 +1,36 @@
+from time import perf_counter
+
+
+def fibonacci(n):
+    if n < 2 : 
+        return n
+    else:
+        return fibonacci(n-1)+fibonacci(n-2)
+    
+resultat=fibonacci(7)
+print(resultat)    
+
+start = perf_counter()
+end = perf_counter()
+
+print("Temps récursif :", end-start, "secondes")
+
+""""""""""""""""""""""""""
+
+
+tab = [0]*1000
+def f_dyn(n):
+    """calculer f(n) en utulisant la programmation dynamique """
+    if n<2:
+        tab[n] = n
+    elif tab[n] == 0:
+        tab[n]=f_dyn(n-1)+f_dyn(n-2)
+    return tab[n]
+
+resultat=f_dyn(7)
+print(resultat)  
+
+start = perf_counter()
+end  = perf_counter()
+
+print("Temps récursif :", end-start, "secondes")
